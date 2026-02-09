@@ -277,14 +277,20 @@
 
       growYes();
     }
-
-    zone.addEventListener("pointermove", e => {
+    function tryMoveAway(x, y) {
       const b = noBtn.getBoundingClientRect();
       const d = Math.hypot(
-        (b.left + b.width / 2) - e.clientX,
-        (b.top + b.height / 2) - e.clientY
+        (b.left + b.width / 2) - x,
+        (b.top + b.height / 2) - y
       );
-      if (d < 140) moveNo(e.clientX, e.clientY);
+      if (d < 140) moveNo(x, y);
+    }
+
+    zone.addEventListener("pointermove", e => {
+      tryMoveAway(e.clientX, e.clientY);
+    });
+    zone.addEventListener("pointerdown", e => {
+      tryMoveAway(e.clientX, e.clientY);
     });
 
     noBtn.addEventListener("click", e => e.preventDefault());
@@ -300,6 +306,7 @@
   </script>
 </body>
 </html>
+
 
 
 
